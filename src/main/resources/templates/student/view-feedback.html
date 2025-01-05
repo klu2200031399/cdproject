@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Feedback</title>
+    <style>
+        /* Apply background image */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background: linear-gradient(to right, #2980b9, #3498db); /* Gradient Background */
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            padding: 12px 25px;
+            background-color: transparent;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+
+        nav ul li a:hover {
+            background-color: #ffffff;
+            color: #3498db;
+            transform: scale(1.1); /* Subtle scaling effect */
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            background-color: #fff;
+            padding: 20px;
+            width: 90%;
+            max-width: 1100px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 80px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .no-feedback {
+            text-align: center;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Student Dashboard Navbar -->
+    <nav>
+        <ul>
+            <li><a th:href="@{/student-dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/student-dashboard/student/give-feedback}">Give Feedback</a></li>
+            <li><a th:href="@{/student-dashboard/student/view-feedback}">View Feedback</a></li>
+            <li><a th:href="@{/student-dashboard/student/profile}">View Profile</a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <h1>Feedback Submissions</h1>
+
+        <!-- No Feedback Message -->
+        <div th:if="${feedbackList.size() == 0}" class="no-feedback">
+            <p>No feedback has been submitted yet.</p>
+        </div>
+
+        <!-- Feedback Table -->
+        <table th:if="${feedbackList.size() > 0}">
+            <thead>
+                <tr>
+                    <th>Feedback ID</th>
+                    <th>Category</th>
+                    <th>Details</th>
+                    <th>Feedback</th>
+                    <th>Submitted By</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="feedback : ${feedbackList}">
+                    <td th:text="${feedback.feedbackId}">Feedback ID</td>
+                    <td th:text="${feedback.category}">Category</td>
+                    <td>
+                        <span th:if="${feedback.category == 'course'}" th:text="${feedback.courseName ?: 'N/A'}"></span>
+                        <span th:if="${feedback.category == 'instructor'}" th:text="${feedback.instructorName ?: 'N/A'}"></span>
+                        <span th:if="${feedback.category == 'service'}" th:text="${feedback.serviceName ?: 'N/A'}"></span>
+                    </td>
+                    <td th:text="${feedback.feedback}">Feedback</td>
+                    <td th:text="${feedback.username}">Submitted By</td>
+                    <td>
+                        <!-- Delete Button -->
+                        <a th:href="@{/student-dashboard/student/delete-feedback(feedbackId=${feedback.feedbackId})}" 
+                           onclick="return confirm('Are you sure you want to delete this feedback?');"
+                           style="color: red; text-decoration: none;">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

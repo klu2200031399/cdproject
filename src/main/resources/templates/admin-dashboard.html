@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://img.freepik.com/free-vector/hand-drawn-colorful-science-education-wallpaper_23-2148489183.jpg?t=st=1733547981~exp=1733551581~hmac=1fdc1945cd9a4a56a315efa5809131aed16379fe922cdc1b5ef7cf2c41a0c746&w=996');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align the card at the top */
+            height: 100%; /* Remove full screen height */
+            padding-top: 50px; /* Adds some space from the top of the page */
+        }
+
+        /* Dashboard container styling */
+        .dashboard-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            width: 1200px; /* Increased width */
+            height: 400px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        h1 {
+            text-align: center;
+            color: #34495e;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+            font-size: 1.6em;
+        }
+
+        /* Navigation bar styling */
+        nav {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2980b9;
+            padding: 12px 40px; /* Increased padding to make buttons wider */
+            min-width: 150px; /* Minimum width for buttons */
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 1.1em;
+            display: inline-block;
+            text-align: center;
+        }
+
+        nav ul li a:hover {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 50px;
+            color: #7f8c8d;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 25px;
+                width: 90%;
+                height: auto;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul li a {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        /* Styling for student details */
+        .student-info p {
+            font-size: 1.4em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <h1>Welcome to Admin Dashboard</h1>
+
+        <!-- Navigation Bar -->
+        <nav>
+            <ul>
+                <li><a th:href="@{/admin-dashboard/admin/view-feedback}">View Feedback</a></li>
+                <li><a th:href="@{/admin-dashboard/admin/add-course}">Add Course</a></li>
+                <li><a th:href="@{/admin-dashboard/admin/add-instructor}">Add Instructor</a></li>
+                <li><a th:href="@{/admin-dashboard/admin/add-service}">Add Institutional Service</a></li>
+                <li><a th:href="@{/admin-dashboard/admin/profile}">View Profile</a></li>
+                <li><a href="/login">Logout</a></li>
+            </ul>
+        </nav>
+
+        <footer>
+            <div class="admin-info">
+                <p><strong>Admin Name:</strong> <span th:text="${user.name}"></span></p>
+                <p><strong>Admin ID:</strong> <span th:text="${user.userId}"></span></p>
+            </div>
+        </footer>
+
+    </div>
+</body>
+</html>

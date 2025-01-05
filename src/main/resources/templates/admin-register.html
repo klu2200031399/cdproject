@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f1f1f1;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .image-section {
+            flex: 1;
+            background: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f') no-repeat center center;
+            background-size: cover;
+        }
+
+        .registration-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        input[type=text], input[type=password], input[type=email], input[type=number] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=number]:focus {
+            background-color: #e8e8e8;
+            border-bottom: 2px solid #4CAF50;
+            outline: none;
+        }
+
+        label {
+            font-size: 14px;
+            color: #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Login link styles */
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-section"></div>
+
+        <div class="registration-container">
+            <div>
+                <h2>Admin Registration</h2>
+                <form action="/admin/register" method="POST">
+                    <label for="username">Username (4 digits):</label>
+                    <input type="text" id="username" name="username" required pattern="^\d{4}$" placeholder="e.g., 1234" title="Username must be exactly 4 digits." />
+
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required pattern="^[A-Za-z]+([ ]?[A-Za-z]+)*$" placeholder="e.g., John Doe" title="Name must only contain letters, and the first and last letter must not be spaces." />
+
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="text" id="phoneNumber" name="phoneNumber" required pattern="^\d{10}$" placeholder="e.g., 9876543210" title="Phone number must be exactly 10 digits." oninput="this.value = this.value.replace(/\D/g, '')" />
+
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$" placeholder="e.g., example@gmail.com" title="Email must be in the format example@gmail.com." />
+
+                    <label for="experience">Experience (1-10 years):</label>
+                    <input type="number" id="experience" name="experience" required min="1" max="10" placeholder="e.g., 5" title="Experience must be between 1 and 10 years." />
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" placeholder="e.g., Admin@123" title="Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, 1 special character, and be at least 6 characters long." />
+
+                    <button type="submit">Register</button>
+                </form>
+                
+                <div class="login-link">
+                    <p>Already have an account? <a href="/login">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+     <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const toggleIcon = document.querySelector(".toggle-password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.textContent = "🙈";
+            } else {
+                passwordField.type = "password";
+                toggleIcon.textContent = "👁";
+            }
+        }
+    </script>
+</body>
+</html>

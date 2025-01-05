@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Instructor</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://img.freepik.com/free-photo/school-office-supplies-frame-rustic-wooden-table_24837-96.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        nav {
+            background: linear-gradient(to right, #2980b9, #3498db);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #ffffff;
+            color: #3498db;
+            transform: scale(1.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 120px;
+        }
+
+        .form-container {
+            width: 600px;
+            margin: 80px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        table tbody tr td {
+            color: black; /* Set the text color for table rows to black */
+        }
+
+        .message {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+            color: #28a745;
+        }
+
+        .error {
+            color: #dc3545;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            table th, table td {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a th:href="@{/admin-dashboard}">Admin Dashboard</a></li>
+            <li><a th:href="@{/admin-dashboard/admin/view-feedback}">View Feedback</a></li>
+            <li><a th:href="@{/admin-dashboard/admin/add-course}">Add Course</a></li>
+            <li><a th:href="@{/admin-dashboard/admin/add-instructor}">Add Instructor</a></li>
+            <li><a th:href="@{/admin-dashboard/admin/add-service}">Add Institutional Service</a></li>
+            <li><a th:href="@{/admin-dashboard/admin/profile}">View Profile</a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </nav>
+
+    <h1>Add Instructor</h1>
+
+    <div class="form-container">
+        <!-- Feedback Message -->
+        <div class="message" th:if="${success}" th:text="${success}"></div>
+        <div class="message error" th:if="${error}" th:text="${error}"></div>
+
+        <form action="/admin-dashboard/admin/add-instructor" method="POST">
+            <label for="instructorName">Instructor Name:</label>
+            <input type="text" id="instructorName" name="instructorName" placeholder="e.g., John Doe" 
+                   pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed" required />
+
+            <button type="submit">Add Instructor</button>
+        </form>
+
+        <!-- Instructor List Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Instructor Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="instructor : ${instructors}">
+                    <td th:text="${instructor.instructorName}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

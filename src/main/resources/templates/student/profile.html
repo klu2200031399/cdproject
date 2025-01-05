@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <style>
+        /* Apply background image */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://img.freepik.com/premium-photo/vector-hand-drawn-back-school-background_575980-27160.jpg?w=996');
+            background-size: cover;
+            background-position: center;
+            margin-top: 80px; /* Offset the body content from the navbar */
+            padding: 20px;
+            color: white;
+        }
+
+        /* Navbar Styles */
+        nav {
+            background: linear-gradient(to right, #2980b9, #3498db); /* Gradient Background */
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Centers items */
+            gap: 30px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            font-weight: 600;
+            color: white;
+            padding: 12px 25px;
+            background-color: transparent;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            font-size: 1.1em;
+        }
+
+        nav ul li a:hover {
+            background-color: #ffffff;
+            color: #3498db;
+            transform: scale(1.1); /* Subtle scaling effect */
+        }
+
+        /* User Profile Card Styling */
+        .user-info {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+            color: black; /* Set text color to black for user details */
+            font-size: 1.1em;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .user-info:hover {
+            transform: scale(1.05); /* Slight zoom effect on hover */
+        }
+
+        h1 {
+            text-align: center;
+            color: #2980b9;
+            margin-bottom: 30px;
+            font-size: 2em;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #2980b9;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Student Dashboard Navbar -->
+    <nav>
+        <ul>
+            <li><a th:href="@{/student-dashboard}">Dashboard</a></li>
+            <li><a th:href="@{/student-dashboard/student/give-feedback}">Give Feedback</a></li>
+            <li><a th:href="@{/student-dashboard/student/view-feedback}">View Feedback</a></li>
+            <li><a th:href="@{/student-dashboard/student/profile}">View Profile</a></li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- User Profile Content -->
+    <div class="user-info">
+        <h1>Student Profile</h1>
+        
+        <!-- Display user details if available -->
+        <div th:if="${user != null}">
+            <p><strong>User ID:</strong> <span th:text="${user.userId}"></span></p>
+            <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>
+            <p><strong>Role:</strong> <span th:text="${user.role}"></span></p>
+        </div>
+
+        <!-- Show error message if user not found -->
+        <div th:if="${error != null}" class="error">
+            <p th:text="${error}"></p>
+        </div>
+    </div>
+</body>
+</html>

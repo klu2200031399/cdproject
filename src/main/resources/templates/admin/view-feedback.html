@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Feedbacks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .feedback-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .feedback-table th, .feedback-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .feedback-table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .logout {
+            float: right;
+        }
+
+        .delete-button {
+            color: red;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .highlight-section {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .highlight-section h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .highlight-section p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-header">
+        <h2>View Feedbacks</h2>
+    </header>
+
+    <nav>
+        <a href="/admin-dashboard/admin/view-feedback">View Feedback</a>
+        <a href="/admin-dashboard/admin/add-course">Add Course</a>
+        <a href="/admin-dashboard/admin/add-instructor">Add Instructor</a>
+        <a href="/admin-dashboard/admin/add-service">Add Institutional Service</a>
+        <a href="/admin-dashboard/admin/profile">View Profile</a>
+        <a href="/login" class="logout">Logout</a>
+    </nav>
+    
+   <div class="highlight-section">
+    <h3>Highlights</h3>
+    <p><strong>Higher Rating Course:</strong> <span th:text="${highestRatedCourse}"></span></p>
+    <p><strong>Higher Rating Instructor:</strong> <span th:text="${highestRatedInstructor}"></span></p>
+    <p><strong>Higher Rating Service:</strong> <span th:text="${highestRatedService}"></span></p>
+</div>
+
+
+    <div class="dashboard-container">
+        <table class="feedback-table">
+            <thead>
+                <tr>
+                    <th>Feedback ID</th>
+                    <th>Category</th>
+                    <th>Details</th>
+                    <th>Student Name</th>
+                    <th>Feedback</th>
+                    <th>Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="feedback : ${feedbacks}">
+                    <td th:text="${feedback.feedbackId}"></td>
+                    <td th:text="${feedback.category}"></td>
+                    <td>
+                        <span th:if="${feedback.category == 'course'}" th:text="${feedback.courseName}"></span>
+                        <span th:if="${feedback.category == 'instructor'}" th:text="${feedback.instructorName}"></span>
+                        <span th:if="${feedback.category == 'service'}" th:text="${feedback.serviceName}"></span>
+                    </td>
+                    <td th:text="${feedback.username}"></td>
+                    <td th:text="${feedback.feedback}"></td>
+                    <td th:text="${feedback.rating}"></td>
+                    <td>
+                        <a th:href="@{/admin-dashboard/admin/delete-feedback(feedbackId=${feedback.feedbackId})}" 
+                           class="delete-button" onclick="return confirm('Are you sure you want to delete this feedback?');">
+                           Delete
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

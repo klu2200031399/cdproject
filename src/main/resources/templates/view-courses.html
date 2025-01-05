@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Courses</title>
+    <style>
+        /* Add your styling for the page here */
+    </style>
+</head>
+<body>
+
+    <h1>Available Courses</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Course ID</th>
+                <th>Course Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="course : ${courses}">
+                <td th:text="${course.id}"></td>
+                <td th:text="${course.name}"></td>
+                <td>
+                    <!-- Update Button -->
+                    <a th:href="@{/admin-dashboard/admin/update-course/{id}(id=${course.id})}">Update</a>
+                    <!-- Delete Button -->
+                    <a th:href="@{/admin-dashboard/admin/delete-course/{id}(id=${course.id})}">Delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
